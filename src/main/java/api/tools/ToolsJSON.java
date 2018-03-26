@@ -16,6 +16,8 @@ import api.models.common.CommonCounterpartyModel;
 import api.models.counterparty.CounterpartyLoadCounterpartiesListModel;
 import api.service.Sender;
 import org.apache.commons.io.FileUtils;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonMethod;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.node.ArrayNode;
 import org.codehaus.jackson.node.JsonNodeFactory;
@@ -35,7 +37,9 @@ public final class ToolsJSON {
 
     // The method converts Object to JSON as string
     public static String parseObjectToJson(Object object) throws IOException {
-        return new ObjectMapper().writeValueAsString(object);
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(JsonMethod.FIELD, JsonAutoDetect.Visibility.ANY);
+        return objectMapper.writeValueAsString(object);
     }
 
     // The method reads properties as strings from file to collection List<String> with filter
